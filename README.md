@@ -20,7 +20,7 @@ For example, the binary for macOS on Apple silicon in `v0.1.0-beta.12` is `antic
 
 Download the binary, `antichain_v<version>_SHA256SUMS`, `antichain_v<version>_SHA256SUMS.sig` and `antichain_v<version>_SHA256SUMS.sigstore.json` from the release into one directory, save the `cosign.pub` in this repository beside them, and run the commands there. In each command, put the release's version in place of `<version>`.
 
-Check the binary against `antichain_v<version>_SHA256SUMS` (on Linux, `sha256sum --ignore-missing -c antichain_v<version>_SHA256SUMS` runs the same check):
+Check the binary against `antichain_v<version>_SHA256SUMS` (on Linux, `sha256sum --ignore-missing -c antichain_v<version>_SHA256SUMS` verifies the same way):
 
 ```sh
 shasum -a 256 --ignore-missing -c antichain_v<version>_SHA256SUMS
@@ -32,7 +32,7 @@ Check the signature on `antichain_v<version>_SHA256SUMS` against `cosign.pub` wi
 cosign verify-blob --key cosign.pub --bundle antichain_v<version>_SHA256SUMS.sigstore.json --insecure-ignore-tlog=true antichain_v<version>_SHA256SUMS
 ```
 
-The signature is not in a public transparency log, so the check is just against the key; cosign prints a warning saying so and then `Verified OK`. Cosign 2 verifies `antichain_v<version>_SHA256SUMS.sig` instead, with `--signature antichain_v<version>_SHA256SUMS.sig` in place of `--bundle antichain_v<version>_SHA256SUMS.sigstore.json`.
+The signature is not in a public transparency log, so the verification is against the key alone; cosign prints a warning saying so and then `Verified OK`. Cosign 2 verifies `antichain_v<version>_SHA256SUMS.sig` instead, with `--signature antichain_v<version>_SHA256SUMS.sig` in place of `--bundle antichain_v<version>_SHA256SUMS.sigstore.json`.
 
 Without cosign, OpenSSL verifies `antichain_v<version>_SHA256SUMS.sig`, which is base64, and prints `Verified OK`:
 
